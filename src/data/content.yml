@@ -1,0 +1,21 @@
+home:
+    title: "Titre du site"
+form:
+    title: "Titre du form"
+interne:
+    question_1:
+        id: 1
+        question: "Comment financer ma formation ?"
+        slug: "comment-financer-ma-formation"
+        answer: |
+            <p>Il est possible de faire financer une formation par son employeur en utilisant le DIF,
+            Droit Individuel à la Formation ou dans le cadre du CIF, Congés Individuel de Formation,
+            ou de la VAE, Validation des Acquis de l’Expérience.</p>
+
+    question_2:
+        id: 2
+        question: "Qu'est-ce que le coaching ?"
+        slug: "qu-est-ce-que-le-coaching"
+        answer: |
+            <p>Le coaching professionnel est l’accompagnement personnalisé et suivi d’un individu ou
+            d’un groupe, qui permet d’atteindre un objectif d’ordre professionnel ou privé.</p>

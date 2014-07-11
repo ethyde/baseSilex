@@ -1,0 +1,13 @@
+{% extends "layout.html.twig" %}
+
+{% block title "Page form" %}
+
+{% block content %}
+    <h1>Page form</h1>
+    <h2>{{ content.form.title }}</h2>
+    {{ form(form, {action: path('form')}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="css/hello.css" rel="stylesheet" />
+{% endblock %}

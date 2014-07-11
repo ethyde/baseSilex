@@ -1,0 +1,14 @@
+{% extends "layout.html.twig" %}
+
+{% block title "Home" %}
+
+{% block content %}
+    <h1>page 404</h1>
+    {{ error }}
+    <a href="{{ path('home') }}">Go to home</a>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="css/hello.css" rel="stylesheet" />
+{% endblock %}

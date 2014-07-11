@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title "Welcome on my site!" %}</title>
+        {% block stylesheets %}
+            <link href="css/style.css" rel="stylesheet" />
+        {% endblock %}
+    </head>
+    <body>
+
+        {% include 'common/flashbag.html.twig' %}
+
+        <ul>
+            {% for key, page in content %}
+                <li>{{ key }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ path('home') }}">Go to home</a>
+        {% block content %}
+
+        {% endblock %}
+        {% block javascripts %}
+            <script src="{{ app.request.basepath }}/js/jquery.js"></script>
+        {% endblock %}
+    </body>
+</html>

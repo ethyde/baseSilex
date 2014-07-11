@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+
+{% block title "Home" %}
+
+{% block content %}
+    <h1>{{ 'Homepage'|trans }}</h1>
+    <h2>{{ content.home.title }}</h2>
+    <ul>
+        {% for key, page in content %}
+            <li {% if app.request.attributes.get('_route') == page %} class="active"{% endif %}>{{ key }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('interne') }}">Go to interne</a>
+    <a href="{{ path('form') }}">Go to form</a>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="css/hello.css" rel="stylesheet" />
+{% endblock %}
