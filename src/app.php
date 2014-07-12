@@ -27,7 +27,7 @@ $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/views',
     'cache' => __DIR__ . '/cache',
-    'twig.form.templates'=> array('form_div_layout.html.twig', 'common/form.layout.html.twig')
+    'twig.form.templates'=> array('common/form.layout.html.twig')
 ));
 $app->register(new ValidatorServiceProvider());
 $app->register(new TranslationServiceProvider());
@@ -93,14 +93,14 @@ $app->match('/form', function (Request $request) use ($app, $content) {
             'constraints' => new Assert\NotBlank(),
             'attr' => array('placeholder' => 'not blank constraints')
         ))
-        ->add('text2', 'text', array('attr' => array('class' => 'span1', 'placeholder' => '.span1')))
+        ->add('text2', 'text', array('required' => false, 'attr' => array('class' => 'span1', 'placeholder' => '.span1')))
         ->add('text3', 'text', array('attr' => array('class' => 'span2', 'placeholder' => '.span2')))
         ->add('text4', 'text', array('attr' => array('class' => 'span3', 'placeholder' => '.span3')))
         ->add('text5', 'text', array('attr' => array('class' => 'span4', 'placeholder' => '.span4')))
         ->add('text6', 'text', array('attr' => array('class' => 'span5', 'placeholder' => '.span5')))
         ->add('text8', 'text', array('disabled' => true, 'attr' => array('placeholder' => 'disabled field')))
         ->add('textarea', 'textarea')
-        ->add('email', 'email')
+        ->add('email', 'email', array('required' => false) )
         ->add('integer', 'integer')
         ->add('money', 'money')
         ->add('number', 'number')
@@ -146,7 +146,7 @@ $app->match('/form', function (Request $request) use ($app, $content) {
             'first_options' => array('label' => 'Password'),
             'second_options' => array('label' => 'Repeat Password'),
         ))
-        ->add('submit', 'submit')
+        ->add('submit', 'submit', array('label' => 'Envoyer'))
         ->getForm();
 
     $form->handleRequest($request);
