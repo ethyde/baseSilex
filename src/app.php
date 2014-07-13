@@ -25,15 +25,15 @@ $app->register(new FormServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new TwigServiceProvider(), array(
-    'twig.path' => __DIR__ . '/views',
-    'cache' => __DIR__ . '/cache',
+    'twig.path' => __DIR__ . '/../resources/views',
+    'cache' => __DIR__ . '/../resources/cache',
     'twig.form.templates'=> array('common/form.layout.html.twig')
 ));
 $app->register(new ValidatorServiceProvider());
 $app->register(new TranslationServiceProvider());
 
 // Content from content.yml
-$yaml = file_get_contents(__DIR__.'/data/content.yml');
+$yaml = file_get_contents(__DIR__.'/../resources/data/content.yml');
 $content = Yaml::parse($yaml);
 
 // Add static pages
@@ -174,20 +174,20 @@ $app->match('/form', function (Request $request) use ($app, $content) {
 })->bind('form');
 
 // erreur
-$app->error(function (\Exception $e, $code) use ($app) {
-    if ($app['debug']) {
-        return;
-    }
+// $app->error(function (\Exception $e, $code) use ($app) {
+//     if ($app['debug']) {
+//         return;
+//     }
 
-    switch ($code) {
-        case 404:
-            $message = $app['twig']->render('errors/404.html.twig', array('error' => $e->getMessage()));
-            break;
-        default:
-            $message = 'Shenanigans! Something went horribly wrong' . $e->getMessage();
-    }
+//     switch ($code) {
+//         case 404:
+//             $message = $app['twig']->render('errors/404.html.twig', array('error' => $e->getMessage()));
+//             break;
+//         default:
+//             $message = 'Shenanigans! Something went horribly wrong' . $e->getMessage();
+//     }
 
-    return new Response($message, $code);
-});
+//     return new Response($message, $code);
+// });
 
 return $app;
