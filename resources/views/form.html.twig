@@ -9,7 +9,8 @@
     {# <p>{{ macros.wrapped_input('username') }}</p>
     <p>{{ macros.input('password', null, 'password') }}</p> #}
     <h2>{{ content.form.title }}</h2>
-    {{ form(form, {action: path('form')}) }}
+    {{ form(form) }}
+    {# {{ form(form, {action: path('form')}) }} #}
 {% endblock %}
 
 {% block stylesheets %}

@@ -9,5 +9,8 @@
         "symfony/config": "~2.3",
         "symfony/translation": "~2.3",
         "symfony/security-csrf": "~2.4"
+    },
+    "autoload": {
+        "psr-0": {"Ethyde": "src/"}
     }
 }
