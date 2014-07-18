@@ -1,6 +1,6 @@
 {
     "require": {
-        "silex/silex": "1.0.*",
+        "silex/silex": "~1.1",
         "twig/twig": ">=1.8,<2.0-dev",
         "symfony/twig-bridge": "~2.3",
         "symfony/yaml": "2.1.*@dev",
@@ -8,7 +8,8 @@
         "symfony/validator": "~2.3",
         "symfony/config": "~2.3",
         "symfony/translation": "~2.3",
-        "symfony/security-csrf": "~2.4"
+        "symfony/security-csrf": "~2.4",
+        "symfony/intl": "2.6.*@dev"
     },
     "autoload": {
         "psr-0": {"Ethyde": "src/"}

@@ -1,8 +1,13 @@
 <?php
+// web/index.php
+
+$filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+if (php_sapi_name() === 'cli-server' && is_file($filename)) {
+    return false;
+}
 
 $app = require __DIR__.'/../src/app.php';
 
-// TODO Commenter la ligne suivante en prod
 $app['debug'] = true;
 
 $app->run();

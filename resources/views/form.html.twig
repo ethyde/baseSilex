@@ -5,10 +5,10 @@
 {# {% import "common/form.custom.layout.html.twig" as macros %} #}
 
 {% block content %}
-    <h1>Page form</h1>
+    <h1>{{ 'Form'|trans }}</h1>
     {# <p>{{ macros.wrapped_input('username') }}</p>
     <p>{{ macros.input('password', null, 'password') }}</p> #}
-    <h2>{{ content.form.title }}</h2>
+    {# <h2>{{ content.form.title }}</h2> #}
     {{ form(form) }}
     {# {{ form(form, {action: path('form')}) }} #}
 {% endblock %}
