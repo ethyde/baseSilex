@@ -47,7 +47,7 @@ class formController
             ->add('percent', 'percent')
             ->add('search', 'search')
             ->add('url', 'url')
-            ->add('choice4', 'choice', array(
+            ->add('choice1', 'choice', array(
                 'choices' => $choices,
                 'multiple' => false,
                 'expanded' => false
@@ -64,8 +64,8 @@ class formController
             ))
             ->add('choice4', 'choice', array(
                 'choices' => $choices,
-                'multiple' => false,
-                'expanded' => false
+                'multiple' => true,
+                'expanded' => true
             ))
             ->add('date', 'date')
             ->add('datetime', 'datetime')

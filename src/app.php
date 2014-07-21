@@ -81,20 +81,20 @@ $app['translator'] = $app->share($app->extend('translator', function ($translato
 $app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm')->bind('form');
 
 // erreur
-// $app->error(function (\Exception $e, $code) use ($app) {
-//     if ($app['debug']) {
-//         return;
-//     }
+$app->error(function (\Exception $e, $code) use ($app) {
+    if ($app['debug']) {
+        return;
+    }
 
-//     switch ($code) {
-//         case 404:
-//             $message = $app['twig']->render('errors/404.html.twig', array('error' => $e->getMessage()));
-//             break;
-//         default:
-//             $message = 'Shenanigans! Something went horribly wrong' . $e->getMessage();
-//     }
+    switch ($code) {
+        case 404:
+            $message = $app['twig']->render('errors/404.html.twig', array('error' => $e->getMessage()));
+            break;
+        default:
+            $message = 'Shenanigans! Something went horribly wrong' . $e->getMessage();
+    }
 
-//     return new Response($message, $code);
-// });
+    return new Response($message, $code);
+});
 
 return $app;
