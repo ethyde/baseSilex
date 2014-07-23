@@ -53,10 +53,6 @@ $app['translator'] = $app->share($app->extend('translator', function ($translato
 }));
 
 
-// TODO
-// How to passe content to controller
-// instead of define it globaly
-$app['twig']->addGlobal('content', $content);
 // Add static pages
 $pages = array(
     'home' => array(
@@ -86,7 +82,9 @@ foreach ($pages as $route => $data) {
 
 }
 
-$app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm')->bind('form');
+$app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm', array(
+            'content' => $content
+        ))->bind('form');
 
 // erreur
 $app->error(function (\Exception $e, $code) use ($app) {
