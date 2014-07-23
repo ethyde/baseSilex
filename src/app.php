@@ -34,7 +34,7 @@ $app->register(new TwigServiceProvider(), array(
     'cache' => __DIR__ . '/../resources/cache',
     'twig.form.templates'=> array('common/form.layout.html.twig')
 ));
-$app->register(new TranslationServiceProvider(),  array(
+$app->register(new TranslationServiceProvider(), array(
     'locale_fallbacks' => array('fr')
 ));
 
@@ -42,17 +42,32 @@ $app->register(new TranslationServiceProvider(),  array(
 $yaml = file_get_contents(__DIR__.'/../resources/data/content.yml');
 $content = Yaml::parse($yaml);
 
-$app['twig']->addGlobal('content', $content);
+$app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
+    $translator->addLoader('yaml', new YamlFileLoader());
 
+    $translator->addResource('yaml', __DIR__.'/../resources/locales/fr.yml', 'fr');
+
+    $translator->addResource('yaml', __DIR__.'/../resources/locales/en.yml', 'en');
+
+    return $translator;
+}));
+
+
+// TODO
+// How to passe content to controller
+// instead of define it globaly
+$app['twig']->addGlobal('content', $content);
 // Add static pages
 $pages = array(
     'home' => array(
         'url' => '/',
-        'template' => 'index.html.twig'
+        'template' => 'index.html.twig',
+        'content' => $content
         ),
     'interne' => array(
         'url' => '/interne',
-        'template' => 'interne.html.twig'
+        'template' => 'interne.html.twig',
+        'content' => $content
         )
 );
 
@@ -62,21 +77,14 @@ foreach ($pages as $route => $data) {
 
     $app->get($url, function() use($app, $data) {
 
-        return $app['twig']->render($data['template']);
+        return $app['twig']->render($data['template'], array(
+            'content' => $data['content']
+        ));
 
     })
     ->bind($route);
 
 }
-
-$app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
-    $translator->addLoader('yaml', new YamlFileLoader());
-
-    $translator->addResource('yaml', __DIR__.'/../resources/locales/fr.yml', 'fr');
-    $translator->addResource('yaml', __DIR__.'/../resources/locales/en.yml', 'en');
-
-    return $translator;
-}));
 
 $app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm')->bind('form');
 
