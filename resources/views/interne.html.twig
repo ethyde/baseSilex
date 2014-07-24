@@ -4,6 +4,12 @@
 
 {% block content %}
     <h1>Page interne</h1>
+    
+    <ul>
+        {% for key, page in content %}
+            <li>{{ key }}</li>
+        {% endfor %}
+    </ul>
     <ul>
         {% for question in content.interne %}
             <li>

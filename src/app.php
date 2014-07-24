@@ -38,10 +38,6 @@ $app->register(new TranslationServiceProvider(), array(
     'locale_fallbacks' => array('fr')
 ));
 
-// Content from content.yml
-$yaml = file_get_contents(__DIR__.'/../resources/data/content.yml');
-$content = Yaml::parse($yaml);
-
 $app['translator'] = $app->share($app->extend('translator', function ($translator, $app) {
     $translator->addLoader('yaml', new YamlFileLoader());
 
@@ -52,18 +48,28 @@ $app['translator'] = $app->share($app->extend('translator', function ($translato
     return $translator;
 }));
 
+$app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
+
+    // Content from content.yml
+    $yaml = file_get_contents(__DIR__.'/../resources/data/content.yml');
+    $content = Yaml::parse($yaml);
+
+    // http://silex.sensiolabs.org/doc/providers/twig.html#customization
+    // https://github.com/silexphp/Silex-Skeleton/blob/master/src/app.php
+    $twig->addGlobal('content', $content);
+
+    return $twig;
+}));
 
 // Add static pages
 $pages = array(
     'home' => array(
         'url' => '/',
-        'template' => 'index.html.twig',
-        'content' => $content
+        'template' => 'index.html.twig'
         ),
     'interne' => array(
         'url' => '/interne',
-        'template' => 'interne.html.twig',
-        'content' => $content
+        'template' => 'interne.html.twig'
         )
 );
 
@@ -73,18 +79,15 @@ foreach ($pages as $route => $data) {
 
     $app->get($url, function() use($app, $data) {
 
-        return $app['twig']->render($data['template'], array(
-            'content' => $data['content']
-        ));
+        return $app['twig']->render($data['template']);
 
     })
     ->bind($route);
 
 }
 
-$app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm', array(
-            'content' => $content
-        ))->bind('form');
+// from controller
+$app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm' )->bind('form');
 
 // erreur
 $app->error(function (\Exception $e, $code) use ($app) {

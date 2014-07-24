@@ -10,14 +10,15 @@
 
         {% include 'common/flashbag.html.twig' %}
 
-        {# <ul>
+        <ul>
             {% for key, page in content %}
                 <li>{{ key }}</li>
             {% endfor %}
-        </ul> #}
+        </ul>
+
         <a href="{{ path('home') }}">Go to Home</a>
         <a href="{{ path('interne') }}">Go to Interne</a>
-        {# <a href="{{ path('form') }}">Go to in Controller Form</a> #}
+        <a href="{{ path('form') }}">Go to in Controller Form</a>
         {% block content %}
 
         {% endblock %}
