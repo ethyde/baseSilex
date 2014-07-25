@@ -1,39 +1,30 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 // use
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 
-use Symfony\Component\Debug\Debug;
-
-use Silex\Provider\UrlGeneratorServiceProvider;
-use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\FormServiceProvider;
+use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\HttpCacheServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
+use Silex\Provider\UrlGeneratorServiceProvider;
 
 use Silex\Provider\ServiceControllerServiceProvider;
 
 $app = new Silex\Application();
 
 // Registering
-$app->register(new serviceControllerServiceProvider());
+$app->register(new ServiceControllerServiceProvider());
 $app->register(new HttpCacheServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new ValidatorServiceProvider());
-$app->register(new TwigServiceProvider(), array(
-    'twig.path' => __DIR__ . '/../resources/views',
-    'cache' => __DIR__ . '/../resources/cache',
-    'twig.form.templates'=> array('common/form.layout.html.twig')
-));
+$app->register(new TwigServiceProvider());
+
 $app->register(new TranslationServiceProvider(), array(
     'locale_fallbacks' => array('fr')
 ));
@@ -60,50 +51,5 @@ $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
 
     return $twig;
 }));
-
-// Add static pages
-$pages = array(
-    'home' => array(
-        'url' => '/',
-        'template' => 'index.html.twig'
-        ),
-    'interne' => array(
-        'url' => '/interne',
-        'template' => 'interne.html.twig'
-        )
-);
-
-foreach ($pages as $route => $data) {
-
-    $url = $data['url'];
-
-    $app->get($url, function() use($app, $data) {
-
-        return $app['twig']->render($data['template']);
-
-    })
-    ->bind($route);
-
-}
-
-// from controller
-$app->match('/form', 'Ethyde\Bundle\Controller\formController::newForm' )->bind('form');
-
-// erreur
-$app->error(function (\Exception $e, $code) use ($app) {
-    if ($app['debug']) {
-        return;
-    }
-
-    switch ($code) {
-        case 404:
-            $message = $app['twig']->render('errors/404.html.twig', array('error' => $e->getMessage()));
-            break;
-        default:
-            $message = 'Shenanigans! Something went horribly wrong' . $e->getMessage();
-    }
-
-    return new Response($message, $code);
-});
 
 return $app;

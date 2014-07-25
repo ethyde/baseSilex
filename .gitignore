@@ -1,3 +1,4 @@
 /vendor
-
+/resources/cache
+/resources/var
 composer.lock
