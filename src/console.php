@@ -1,30 +1,34 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+require __DIR__ . '/../src/app.php';
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
-$console = new Application('My Silex Application', 'n/a');
+$console = new Application('Silex', '0.1');
 
-$console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption::VALUE_REQUIRED, 'The Environment name.', 'dev'));
-// $console->setDispatcher($app['dispatcher']);
+require __DIR__.'/../resources/config/prod.php';
+
+// $app->boot();
+
 $console
     ->register('cache:clear')
-    ->setDescription('Clears the cache')
-    ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-
+    ->setDescription('Clear the cache')
+    ->setCode(function( InputInterface $input, OutputInterface $output ) use ($app) {
         $cacheDir = $app['cache.path'];
         $finder = Finder::create()->in($cacheDir)->notName('.gitkeep');
 
         $filesystem = new Filesystem();
         $filesystem->remove($finder);
 
-        $output->writeln(sprintf("%s <info>success</info>", 'cache:clear'));
-    });
-;
+        $output->writeln('<info>Cache cleared</info>');
+    })
+    ;
 
-return $console;
+$console->run();

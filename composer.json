@@ -8,6 +8,7 @@
         "symfony/console": "~2.3",
         "symfony/validator": "~2.3",
         "symfony/config": "~2.3",
+        "symfony/finder": "~2.2",
         "symfony/translation": "~2.3",
         "symfony/security-csrf": "~2.4",
         "symfony/monolog-bridge": "~2.3",

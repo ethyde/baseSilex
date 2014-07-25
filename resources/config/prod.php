@@ -1,7 +1,16 @@
 <?php
 
+// Cache
+$app['cache.path'] = __DIR__ . '/../cache';
+
+$app['http_cache.cache_dir'] = $app['cache.path'] . '/http';
+$app['twig.options.cache'] = $app['cache.path'] . '/twig';
+$app['profiler.cache_dir'] =  $app['cache.path'] . '/profiler';
+
 // configure your app for the production environment
 
-$app['twig.path'] = array(__DIR__.'/../../resources/views');
-$app['twig.options'] = array('cache' => __DIR__.'/../../resources/cache');
+// config Twig
+$app['twig.path'] = array(__DIR__.'/../views');
 $app['twig.form.templates'] = array('common/form.layout.html.twig');
+
+
