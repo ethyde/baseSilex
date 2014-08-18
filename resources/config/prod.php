@@ -12,5 +12,3 @@ $app['profiler.cache_dir'] =  $app['cache.path'] . '/profiler';
 // config Twig
 $app['twig.path'] = array(__DIR__.'/../views');
 $app['twig.form.templates'] = array('common/form.layout.html.twig');
-
-

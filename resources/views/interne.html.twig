@@ -2,6 +2,12 @@
 
 {% block title "Page interne" %}
 
+{% block stylesheets %}
+
+    <link href="{{ app.request.basepath }}css/hello.css" rel="stylesheet" />
+
+{% endblock %}
+
 {% block content %}
     <h1>Page interne</h1>
     
@@ -18,9 +24,4 @@
             </li>
         {% endfor %}
     </ul>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="css/hello.css" rel="stylesheet" />
 {% endblock %}

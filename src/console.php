@@ -28,7 +28,6 @@ $console
         $filesystem->remove($finder);
 
         $output->writeln('<info>Cache cleared</info>');
-    })
-    ;
+    });
 
 $console->run();
